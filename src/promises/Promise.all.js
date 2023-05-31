@@ -10,20 +10,22 @@ Promise.all([promise1, promise2, promise3]).then(values => {
 })
 
 
-Promise.myAll = function (values) {
- return new Promise((resolve, reject) => {
-  let completed = 0;
-  let results = [];
-  values.forEach((value, index) => {
-   Promise.resolve(value).then(result => {
-    completed++;
-    results[index] = result;
-    if (completed === values.length) {
-     resolve(results);
-    }
-   }).catch((error) => reject(error))
-  });
- })
+Promise.myAll = function (promises) {
+  const settledPromises = [];
+  let settledPromisesCount = 0;
+  return new Promise((resolve, reject) => {
+    promises.forEach((promise, index) => {
+      promise.then((response) => {
+        settledPromises[index] = response;
+        settledPromisesCount++;
+        if(settledPromisesCount === promises.length) {
+          resolve(settledPromises);
+        }
+      }).catch((err) => {
+        reject(err)
+      });
+    });
+  })
 }
 
 Promise.myAll([promise1, promise2, promise3, 78]).then(values => {

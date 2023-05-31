@@ -1,5 +1,5 @@
-let finalObj = {};
-let magic = (obj, parent) => {
+const finalObj = {};
+const magic = (obj, parent) => {
   for(let key in obj) {
     if(typeof obj[key] === 'object') {
       magic(obj[key], parent + "_" + key);
@@ -23,4 +23,12 @@ let user = {
       }
     }
   }
+}
+
+const resultObj = {
+  user_name: 'Akshay',
+  user_address_personal_city: 'Dehradun',
+  user_address_personal_area: 'Majra',
+  user_address_office_city: 'Hyderabad',
+  user_address_office_area_landmark: 'Hitech'
 }
